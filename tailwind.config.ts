@@ -6,7 +6,8 @@ export default {
     borderWidth: {
       DEFAULT: '1px',
       '0': '0',
-      '0.1': '0.1px',
+      '0.5': '0.5px',
+      '1': '1px',
       '2': '2px',
       '3': '3px',
       '4': '4px',
@@ -15,12 +16,6 @@ export default {
     },
     fontFamily: {
       sans: ['ui-monospace','SFMono-Regular','"SF Mono"','Menlo','Consolas','"Liberation Mono"','monospace']
-    },
-    colors: {
-      'white': '#fff',
-      'off-white': '#f5f8fa',
-      'orange': '#fd5a1e',
-      'light-orange': '#facc15',
     },
     extend: {
       keyframes: {
