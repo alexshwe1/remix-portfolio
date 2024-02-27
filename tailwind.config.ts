@@ -15,7 +15,8 @@ export default {
       '8': '8px',
     },
     fontFamily: {
-      sans: ['ui-monospace','SFMono-Regular','"SF Mono"','Menlo','Consolas','"Liberation Mono"','monospace']
+      sans: ['ui-monospace','SFMono-Regular','"SF Mono"','Menlo','Consolas','"Liberation Mono"','monospace'],
+      block: ['apple-system','BlinkMacSystemFont','"Segoe UI"','Helvetica','Arial','sans-serif','"Apple Color Emoji"','"Segoe UI Emoji"']
     },
     extend: {
       keyframes: {
@@ -35,11 +36,22 @@ export default {
           '0%, 100%': { transform: 'rotate(0deg)' },
           '50%': { transform: 'rotate(var(--tilt))' },
         },
+        'orange-wash': {
+          '0%, 100%': {
+            'background-size':'200% 200%',
+             'background-position': 'left center'
+         },
+         '50%': {
+            'background-size':'200% 200%',
+             'background-position': 'right center'
+         }
+        },
       },
       animation: {
         'fade-out': "fade-out .5s",
         'fade-in': "fade-in .5s",
         'wiggle': 'wiggle .25s ease-in-out',
+        'orange-wash': 'orange-wash 10s ease infinite',
       }
     },
   },

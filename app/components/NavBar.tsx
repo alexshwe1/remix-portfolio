@@ -10,7 +10,7 @@ export default function NavBar() {
     setIsOpen((previous) => !previous);
   };
 
-  const navItems = ['About', 'Portfolio', 'Resume'];
+  const navItems = [{title: 'About', path: '/'}, {title: 'Portfolio', path: '/portfolio'}, {title: 'Resume', path: '/resume'}];
 
   return (
     <header className="p-2 bg-white border-b-1 border-gray-300">
@@ -36,21 +36,21 @@ export default function NavBar() {
               return(
                 <NavLink
                   key={i}
-                  to={`/${item.toLowerCase()}`}
+                  to={`${item.path}`}
                   className={`py-2 flex flex-col static ml-2 duration-500 ease-in-out motion-reduce:transition-none ${
                     isOpen ? "animate-fade-in" : "animate-fade-out invisible -mt-20 var(--delay, 0)"
                   }`}
                   style={{ '--delay': `${i * 0.25}s` } as any}
                 >
-                  <p className="text-tertiary font-medium">{item}</p>
+                  <p className="font-medium hover:text-orange-500 transition-colors duration-200">{item.title}</p>
                 </NavLink>
               );
             })}
           </div>
         </div>
         <div className="flex flex-row items-start p-2">
-          <button className="px-4"><FaGithub size={50}/></button>
-          <button className="px-4"><FaLinkedin size={50}/></button>
+          <button className="px-4 hover:animate-wiggle" onClick={() => window.open('https://github.com/alexshwe1', '_blank')}><FaGithub size={50}/></button>
+          <button className="px-4 hover:animate-wiggle" onClick={() => window.open('https://www.linkedin.com/in/alex-shwe/', '_blank')}><FaLinkedin size={50}/></button>
         </div>
       </div>
     </header>
