@@ -3,11 +3,24 @@ import type { Config } from 'tailwindcss'
 export default {
   content: ['./app/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    borderWidth: {
+      DEFAULT: '1px',
+      '0': '0',
+      '0.1': '0.1px',
+      '2': '2px',
+      '3': '3px',
+      '4': '4px',
+      '6': '6px',
+      '8': '8px',
+    },
+    fontFamily: {
+      sans: ['ui-monospace','SFMono-Regular','"SF Mono"','Menlo','Consolas','"Liberation Mono"','monospace']
+    },
     colors: {
-      'primary': '#F8FAFD',
-      'secondary': '#B4AAA9',
-      'tertiary': '#FFF0DF',
-      'quaternary': '#F0C9B3',
+      'white': '#fff',
+      'off-white': '#f5f8fa',
+      'orange': '#fd5a1e',
+      'light-orange': '#facc15',
     },
     extend: {
       keyframes: {
@@ -23,10 +36,15 @@ export default {
           "80%": { opacity: '.5' },
           "100%": { opacity: '1' },
         },
+        'wiggle': {
+          '0%, 100%': { transform: 'rotate(0deg)' },
+          '50%': { transform: 'rotate(var(--tilt))' },
+        },
       },
       animation: {
         'fade-out': "fade-out .5s",
         'fade-in': "fade-in .5s",
+        'wiggle': 'wiggle .25s ease-in-out',
       }
     },
   },

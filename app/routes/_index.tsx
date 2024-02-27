@@ -9,8 +9,8 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="bg-primary">
-      <h1 className="text-3xl font-bold ">
+    <div className="bg-off-white">
+      <h1 className="text-3xl font-bold text-tertiary">
         Whats good
 
 

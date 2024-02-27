@@ -11,8 +11,11 @@ export default function NavBar() {
   const navItems = ['About', 'Portfolio', 'Resume'];
 
   return (
-    <header className="flex items-start flex-col p-2 bg-tertiary group">
-      <div className="flex flex-row items-center">
+    <header className="flex items-start flex-col p-2 group bg-white border-b-0.1 border-gray-200">
+      <div 
+        className="flex flex-row items-center group-hover:animate-wiggle"
+        style={{ '--tilt': isOpen ? '0deg': '-20deg' } as any}
+      >
         <NavLink to="/" className="py-2 block">
           <p
             role="img"
@@ -25,7 +28,7 @@ export default function NavBar() {
             🍔
           </p>
         </NavLink>
-        <p className="pl-2 scale-0 transition-all rounded bg-gray-800 text-md text-black group-hover:scale-100">✨ Click me! ✨</p>
+        
       </div>
       <div className={`${isOpen ? "" : ""}`}>
         {navItems.map((item, i) => {
@@ -38,7 +41,7 @@ export default function NavBar() {
               }`}
               style={{ '--delay': `${i * 0.25}s` } as any}
             >
-              <p className="text-black font-semibold">{item}</p>
+              <p className="text-tertiary font-medium">{item}</p>
             </NavLink>
           );
         })}
