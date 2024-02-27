@@ -8,9 +8,12 @@ export default function NavBar() {
     setIsOpen((previous) => !previous);
   };
 
+  const navItems = ['About', 'Portfolio', 'Resume'];
+
   return (
-    <header className="flex items-start flex-col p-6">
-        <NavLink to="/" className="block static ">
+    <header className="flex items-start flex-col p-2 bg-tertiary group">
+      <div className="flex flex-row items-center">
+        <NavLink to="/" className="py-2 block">
           <p
             role="img"
             aria-label="burger"
@@ -22,28 +25,24 @@ export default function NavBar() {
             🍔
           </p>
         </NavLink>
-        <div
-          className={`py-1 flex flex-col static ml-2 duration-1000 ease-in-out motion-reduce:transition-none ${
-            isOpen ? "" : "invisible -mt-20"
-          }`}
-        >
-          <NavLink
-            to="/about"
-            className=""
-          >
-            Kick
-          </NavLink>
-          <NavLink
-            to="/portfolio"
-          >
-            Rocks
-          </NavLink>
-          <NavLink
-            to="/resume"
-          >
-            Loser
-          </NavLink>
-        </div>
+        <p className="pl-5 scale-0 rounded bg-gray-800 text-md text-black group-hover:scale-100">✨ You hover me!</p>
+      </div>
+      <div className={`${isOpen ? "" : ""}`}>
+        {navItems.map((item, i) => {
+          return(
+            <NavLink
+              key={i}
+              to={`/${item.toLowerCase()}`}
+              className={`py-2 flex flex-col static ml-2 duration-500 ease-in-out motion-reduce:transition-none ${
+                isOpen ? "animate-fade-in" : "animate-fade-out invisible -mt-20 var(--delay, 0)"
+              }`}
+              style={{ '--delay': `${i * 0.25}s` } as any}
+            >
+              <p className="text-black font-semibold">{item}</p>
+            </NavLink>
+          );
+        })}
+      </div>
     </header>
   );
 }
