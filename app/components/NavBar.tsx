@@ -25,7 +25,7 @@ export default function NavBar() {
             🍔
           </p>
         </NavLink>
-        <p className="pl-5 scale-0 rounded bg-gray-800 text-md text-black group-hover:scale-100">✨ You hover me!</p>
+        <p className="pl-2 scale-0 transition-all rounded bg-gray-800 text-md text-black group-hover:scale-100">✨ Click me! ✨</p>
       </div>
       <div className={`${isOpen ? "" : ""}`}>
         {navItems.map((item, i) => {
