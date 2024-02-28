@@ -19,7 +19,7 @@ export default function NavBar() {
         style={{ '--tilt': isOpen ? '0deg': '-20deg' } as any}
       >
         <div className='flex items-start flex-col group'>
-          <NavLink to="/" className="py-2 block group-hover:animate-wiggle">
+          <div className="py-2 block group-hover:animate-wiggle">
             <p
               role="img"
               aria-label="burger"
@@ -30,7 +30,7 @@ export default function NavBar() {
             >
               🍔
             </p>
-          </NavLink>
+          </div>
           <div className={`${isOpen ? "" : ""}`}>
             {navItems.map((item, i) => {
               return(
@@ -42,7 +42,7 @@ export default function NavBar() {
                   }`}
                   style={{ '--delay': `${i * 0.25}s` } as any}
                 >
-                  <p className="font-medium hover:text-orange-500 transition-colors duration-200">{item.title}</p>
+                  <p className="text-base font-semibold hover:text-orange-500 transition-colors duration-200">{item.title}</p>
                 </NavLink>
               );
             })}
