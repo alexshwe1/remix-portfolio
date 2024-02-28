@@ -42,7 +42,7 @@ export default function NavBar() {
                   }`}
                   style={{ '--delay': `${i * 0.25}s` } as any}
                 >
-                  <p className="text-base font-semibold hover:text-orange-500 transition-colors duration-200">{item.title}</p>
+                  <p className="text-base font-semibold transition hover:scale-105 hover:text-orange-500 transition-colors">{item.title}</p>
                 </NavLink>
               );
             })}
