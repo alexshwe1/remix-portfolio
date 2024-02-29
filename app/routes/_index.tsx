@@ -90,7 +90,7 @@ export default function Index() {
             style={{
               transform: isInView ? "none" : "translateY(150px)",
               opacity: isInView ? 1 : 0,
-              transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s"
+              transition: "all 0.75s cubic-bezier(0.17, 0.55, 0.55, 1)"
             }}
           >
             Hey I'm Alex Shwe and I love to build. My love for creating started with my middle school woodowrking elective. 
