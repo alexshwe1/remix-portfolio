@@ -5,12 +5,8 @@ export default function Footer() {
   const footerRef = useRef(null);
   const isFooterInView = useInView(footerRef);
 
-  const handleClick = () => {
-    
-  };
-
   return (
-    <footer className="bg-white border-b-1 border-gray-300">
+    <footer className="bg-white">
       <div className="py-6 flex flex-col items-center">
         <div
           ref={footerRef}

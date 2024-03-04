@@ -1,5 +1,5 @@
 import { useOutletContext } from "@remix-run/react";
-import { AnimatePresence, MotionValue, motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
+import { AnimatePresence, MotionValue, motion, useInView, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import headshot from '../images/headshot.png'
 
@@ -50,11 +50,6 @@ function Card(props: CardProps) {
   const [exitX, setExitX] = useState<number>(0);
 
   const x = useMotionValue(0);
-  const scale = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
-  const rotate = useTransform(x, [-150, 0, 150], [-45, 0, 45], {
-      clamp: false,
-  });
-
   const variantsFrontCard = {
       animate: { scale: 1, y: 0, opacity: 1 },
       exit: (custom: number) => ({ x: custom, opacity: 0, scale: 0.5 }),
@@ -65,12 +60,12 @@ function Card(props: CardProps) {
   };
 
   function handleDragEnd(_: any, info: any) {
-      if (info.offset.x < -100) {
-          setExitX(-250);
+      if (info.offset.x < -20) {
+          setExitX(-20);
           props.setIndex(props.index + 1 == items.length ? 0 : props.index + 1);
       }
-      if (info.offset.x > 100) {
-          setExitX(250);
+      if (info.offset.x > 20) {
+          setExitX(20);
           props.setIndex(props.index + 1 == items.length ? 0 : props.index + 1);
       }
   }
@@ -78,13 +73,8 @@ function Card(props: CardProps) {
   return (
     <motion.div
       style={{
-        width: 150,
-        height: 150,
         position: "absolute",
         top: 0,
-        x,
-        rotate,
-        scale,
       }}
       drag={props.drag}
       dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
@@ -101,24 +91,24 @@ function Card(props: CardProps) {
       }
     >
       <div
-        className="flex flex-row bg-gray-50 h-[30vh] w-[60vw] items-center justify-items-center rounded-2xl"
+        className="flex bg-gray-50 h-[30vh] w-[60vw] items-center justify-center rounded-2xl"
       >
         <img 
           src={props.item.img} 
           alt={props.item.title} 
           draggable="false"
-          className="w-16 h-16 object-fill rounded-full"
+          className="w-[20vh] h-[20vh] object-fit rounded-full"
         />
         <div
           className="flex flex-col"
         >
           <h2
-            className="pl-5 font-block font-extrabold "
+            className="pl-5 pb-2 font-block font-extrabold text-4xl animate-orange-wash bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 bg-clip-text text-transparent font-block font-extrabold"
           >
             {props.item.title}
           </h2>
           <p
-            className="pl-5 pr-10"
+            className="pl-5 pr-10 w-[50vw]"
           >
             {props.item.desc}
           </p>
@@ -129,20 +119,10 @@ function Card(props: CardProps) {
 }
 
 export default function Portfolio() {
-
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
-  const titleScale = useTransform(scrollYProgress, [0, .005, .095, .1], [1, 2.5, 2.5, 0]);
-  const titleXProgress = useTransform(scrollYProgress, [0, .005, .095, .1], [0, 500, -500,  0]);
-  const projectsY = useTransform(scrollYProgress, [0, .1, .1475, 1], [0, 0, -500, -500]);
-  const cardScale = useTransform(scrollYProgress, [0, .1, .1475, 1], [1, 1, 1.2, 5])
-  const cardOpacity = useTransform(scrollYProgress, [0, .1, .1475, 1], [1, 1, .95, 0])
-
   const [index, setIndex] = useState(0);
+
+  const projectsRef = useRef(null);
+  const areProjectsInView = useInView(projectsRef);
 
   return (
     <div className="flex flex-col z-30">
@@ -166,25 +146,38 @@ export default function Portfolio() {
           Featured Projects
         </motion.p>
       </div>
-      <div className="md:pt-20 md:pb-80 2xl:py-96 bg-white border-b-1 border-gray-300">
+      <div
+        className="flex justify-center md:pt-20 md:pb-80 2xl:py-96 bg-white border-b-1 border-gray-300" 
+        ref={projectsRef}
+      >
         <motion.div 
-          style={{ width: 150, height: 150, position: "relative" }}
+          style={{
+            opacity: areProjectsInView ? 1 : 0,
+            transition: "all 1.5s",
+            height: 150,
+            position: "relative",
+          }}
         >
           <AnimatePresence 
             initial={false}
           >
-            <Card key={index + 1 == items.length ? 0 : index + 1} frontCard={false} index={index + 1 == items.length ? 0 : index + 1} setIndex={setIndex} item={index + 1 == items.length ? items[0] : items[index + 1]}/>
-            <Card
-              key={index}
-              frontCard={true}
-              index={index}
-              setIndex={setIndex}
-              drag="x"
-              item={items[index]}
-            />
+              <div className="w-[60vw] h-[60vh]"/>
+              <Card key={index + 1 == items.length ? 0 : index + 1} frontCard={false} index={index + 1 == items.length ? 0 : index + 1} setIndex={setIndex} item={index + 1 == items.length ? items[0] : items[index + 1]}/>
+              <Card
+                key={index}
+                frontCard={true}
+                index={index}
+                setIndex={setIndex}
+                drag="x"
+                item={items[index]}
+              />
           </AnimatePresence>
         </motion.div>
       </div>
     </div>
   );
 }
+
+/**
+ * <div className="w-[60vw] h-[60vh] bg-black"/>
+ */
