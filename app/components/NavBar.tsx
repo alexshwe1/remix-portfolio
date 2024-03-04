@@ -13,7 +13,7 @@ export default function NavBar() {
   const navItems = [{title: 'About', path: '/'}, {title: 'Portfolio', path: '/portfolio'}, {title: 'Resume', path: '/resume'}];
 
   return (
-    <header className="p-2 bg-white border-b-1 border-gray-300">
+    <header className="px-2 bg-white border-b-1 border-gray-300 z-50">
       <div 
         className="flex flex-row place-content-between p-2"
         style={{ '--tilt': isOpen ? '0deg': '-20deg' } as any}
@@ -41,6 +41,9 @@ export default function NavBar() {
                     isOpen ? "animate-fade-in" : "animate-fade-out invisible -mt-20 var(--delay, 0)"
                   }`}
                   style={{ '--delay': `${i * 0.25}s` } as any}
+                  onClick={() => {
+                    setIsOpen((previous) => !previous);
+                  }}
                 >
                   <p className="text-base font-semibold transition hover:scale-105 hover:text-orange-500 transition-colors">{item.title}</p>
                 </NavLink>

@@ -7,14 +7,19 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useOutletContext,
 } from "@remix-run/react";
 import NavBar from "./components/NavBar";
 import stylesheet from "~/tailwind.css";
 import Footer from "./components/Footer";
+import { useRef } from "react";
+import { MotionValue, useScroll, motion } from "framer-motion";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: stylesheet }];
 
+
 export default function App() {
+
   return (
     <html lang="en">
       <head>
@@ -24,12 +29,14 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <NavBar />
-        <Outlet />
-        <Footer />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
+        <div>
+          <NavBar />
+          <Outlet/>
+          <Footer />
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </div>
       </body>
     </html>
   );
