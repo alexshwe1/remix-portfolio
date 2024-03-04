@@ -74,7 +74,7 @@ function Card(props: CardProps) {
     <motion.div
       style={{
         position: "absolute",
-        top: 0,
+        top: 0
       }}
       drag={props.drag}
       dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
@@ -91,7 +91,7 @@ function Card(props: CardProps) {
       }
     >
       <div
-        className="flex bg-gray-50 h-[30vh] w-[60vw] items-center justify-center rounded-2xl"
+        className="flex items-center justify-center pl-10 bg-gray-50 h-[30vh] w-[60vw] rounded-2xl"
       >
         <img 
           src={props.item.img} 
@@ -156,6 +156,10 @@ export default function Portfolio() {
             transition: "all 1.5s",
             height: 150,
             position: "relative",
+            transitionDelay: ".5s"
+          }}
+          transition={{
+            delay: 3
           }}
         >
           <AnimatePresence 
