@@ -103,7 +103,7 @@ function Card(props: CardProps) {
           className="flex flex-col pl-5"
         >
           <h2
-            className="pb-2 font-block font-extrabold text-4xl animate-orange-wash bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 bg-clip-text text-transparent font-block font-extrabold"
+            className="pb-2 pt-10 md:pt-0 font-block font-extrabold text-4xl animate-orange-wash bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 bg-clip-text text-transparent font-block font-extrabold"
           >
             {props.item.title}
           </h2>
@@ -143,7 +143,7 @@ export default function Portfolio() {
           Featured Projects
         </motion.p>
       </div>
-      <div ref={ref} className="px-5 pt-[6vh] pb-[100vh] md:pt-[12vh] md:pb-[45vh] bg-white">
+      <div ref={ref} className="px-5 pt-[6vh] pb-[100vh] md:pt-[12vh] md:pb-[45vh] bg-white overflow-hidden">
         <div 
           className="flex flex-row items-center justify-center"
         >
