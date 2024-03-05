@@ -93,7 +93,7 @@ export default function Index() {
           </AnimatePresence>
         </div>
       </div>
-      <div className="py-24 px-5 md:py-48 md:px-52 bg-gray-50 border-b-1 border-gray-300">
+      <div className="py-24 px-5 md:py-48 md:px-52 bg-gray-50">
         <div 
           className="flex flex-col items-center"
         >

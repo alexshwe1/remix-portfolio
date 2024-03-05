@@ -6,7 +6,7 @@ export default function Footer() {
   const isFooterInView = useInView(footerRef);
 
   return (
-    <footer className="bg-white">
+    <footer className="bg-white border-t-1 border-gray-300">
       <div className="py-6 flex flex-col items-center">
         <div
           ref={footerRef}

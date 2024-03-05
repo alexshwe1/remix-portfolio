@@ -1,40 +1,40 @@
 import { useOutletContext } from "@remix-run/react";
 import { AnimatePresence, MotionValue, motion, useInView, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import headshot from '../images/headshot.png'
+import bargain from '../images/bargain.jpg';
+import stravafy from '../images/stravafy.png'
+import moto from '../images/moto.png'
 
 interface Project {
   id: number;
   title: string;
   img: string;
   desc: string;
+  shortDesc: string;
 }
 
 const items: Project[] = [
   {
     id: 1,
-    title: "React Commerce",
-    img: "https://images.pexels.com/photos/18073372/pexels-photo-18073372/free-photo-of-young-man-sitting-in-a-car-on-a-night-street.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi? Voluptate, quos sunt dolorum facilis, id eum sequi placeat accusantium saepe eos laborum.",
+    title: "Bargain",
+    img: bargain,
+    desc: "Bargain is an iOS app I developed to showcase exclusive deals at bars in Madison and Chicago. Since hitting the App Store in September 2023, it's been a hit, racking up hundreds of downloads. By simplifying the discovery of new promotions and bolstering local businesses, Bargain is reshaping the nightlife landscape, seamlessly merging technology with social experiences.",
+    shortDesc: "An iOS app for exclusive bar deals in Madison and Chicago.",
   },
   {
     id: 2,
-    title: "Next.js Blog",
-    img: "https://images.pexels.com/photos/18023772/pexels-photo-18023772/free-photo-of-close-up-of-a-person-holding-a-wristwatch.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi? Voluptate, quos sunt dolorum facilis, id eum sequi placeat accusantium saepe eos laborum.",
+    title: "Stravafy",
+    img: stravafy,
+    desc: "Stravafy is a Remix application that bridges your Strava account with Spotify, allowing for seamless integration between your fitness activities and music preferences. Once you upload an activity on Strava, Stravafy automatically updates your activity to display the music you listened to during your workout. Additionally, Stravafy offers personalized playlists based on your activity types and paces, enhancing your workout experience with tailored music selections. ",
+    shortDesc: "A Remix application linking Strava with Spotify, enhancing workout experiences with personalized playlists.",
   },
   {
     id: 3,
-    title: "Vanilla JS App",
-    img: "https://images.pexels.com/photos/6894528/pexels-photo-6894528.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi? Voluptate, quos sunt dolorum facilis, id eum sequi placeat accusantium saepe eos laborum.",
-  },
-  {
-    id: 4,
-    title: "Music App",
-    img: "https://images.pexels.com/photos/18540208/pexels-photo-18540208/free-photo-of-wood-landscape-water-hill.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi? Voluptate, quos sunt dolorum facilis, id eum sequi placeat accusantium saepe eos laborum.",
-  },
+    title: "Moto Bikes",
+    img: moto,
+    desc: "Moto is an online storefront providing electric bikes at accessible price points, merging innovation with eco-friendly transportation. Since its inception, Moto has been committed to making eco-friendly transportation options more accessible to all, revolutionizing the way people commute and adventure.",
+    shortDesc: "An online storefront offering affordable electric bikes, merging innovation with eco-friendly transportation.",
+  }
 ];
 
 
@@ -56,7 +56,7 @@ function Card(props: CardProps) {
   };
   const variantsBackCard = {
       initial: { scale: 0, y: 105, opacity: 0 },
-      animate: { scale: 0.75, y: 200, opacity: 0.5 },
+      animate: { scale: 0.75, y: 280, opacity: 0.5 },
   };
 
   function handleDragEnd(_: any, info: any) {
@@ -91,27 +91,24 @@ function Card(props: CardProps) {
       }
     >
       <div
-        className="flex items-center justify-center pl-10 bg-gray-50 h-[30vh] w-[60vw] rounded-2xl"
+        className="flex flex-col md:flex-row items-center justify-center px-5 bg-gray-100 h-[60vh] md:h-[40vh] md:w-[70vw] rounded-2xl shadow-xl"
       >
         <img 
           src={props.item.img} 
           alt={props.item.title} 
           draggable="false"
-          className="w-[20vh] h-[20vh] object-fit rounded-full"
+          className="w-[20vh] h-[20vh] md:w-[30vh] md:h-[30vh] rounded-full animate-orange-wash bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 p-1"
         />
         <div
-          className="flex flex-col"
+          className="flex flex-col pl-5"
         >
           <h2
-            className="pl-5 pb-2 font-block font-extrabold text-4xl animate-orange-wash bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 bg-clip-text text-transparent font-block font-extrabold"
+            className="pb-2 font-block font-extrabold text-4xl animate-orange-wash bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 bg-clip-text text-transparent font-block font-extrabold"
           >
             {props.item.title}
           </h2>
-          <p
-            className="pl-5 pr-10 w-[50vw]"
-          >
-            {props.item.desc}
-          </p>
+          <p className="hidden lg:block">{props.item.desc}</p>
+          <p className="lg:hidden">{props.item.shortDesc}</p>
         </div>
       </div>
     </motion.div>
@@ -121,8 +118,8 @@ function Card(props: CardProps) {
 export default function Portfolio() {
   const [index, setIndex] = useState(0);
 
-  const projectsRef = useRef(null);
-  const areProjectsInView = useInView(projectsRef);
+  const ref = useRef(null)
+  const isInView = useInView(ref)
 
   return (
     <div className="flex flex-col z-30">
@@ -146,42 +143,46 @@ export default function Portfolio() {
           Featured Projects
         </motion.p>
       </div>
-      <div
-        className="flex justify-center md:pt-20 md:pb-80 2xl:py-96 bg-white border-b-1 border-gray-300" 
-        ref={projectsRef}
-      >
-        <motion.div 
-          style={{
-            opacity: areProjectsInView ? 1 : 0,
-            transition: "all 1.5s",
-            height: 150,
-            position: "relative",
-            transitionDelay: ".5s"
-          }}
-          transition={{
-            delay: 3
-          }}
+      <div ref={ref} className="px-5 pt-[6vh] pb-[100vh] md:pt-[12vh] md:pb-[45vh] bg-white">
+        <div 
+          className="flex flex-row items-center justify-center"
         >
-          <AnimatePresence 
-            initial={false}
+          <div
+            style={{
+              transform: isInView ? "none" : "translateY(80px)",
+              opacity: isInView ? 1 : 0,
+              transition: "all 0.75s"
+            }}
           >
-              <div className="w-[60vw] h-[60vh]"/>
-              <Card key={index + 1 == items.length ? 0 : index + 1} frontCard={false} index={index + 1 == items.length ? 0 : index + 1} setIndex={setIndex} item={index + 1 == items.length ? items[0] : items[index + 1]}/>
-              <Card
-                key={index}
-                frontCard={true}
-                index={index}
-                setIndex={setIndex}
-                drag="x"
-                item={items[index]}
-              />
-          </AnimatePresence>
-        </motion.div>
+            <motion.div 
+              style={{
+                position: "relative",
+              }}
+            >
+              <AnimatePresence 
+                initial={false}
+              >
+                <div className="w-[40vh] md:w-[70vw] md:h-[40vh]" />
+                <Card 
+                  key={index + 1 == items.length ? 0 : index + 1} 
+                  frontCard={false} 
+                  index={index + 1 == items.length ? 0 : index + 1} 
+                  setIndex={setIndex} 
+                  item={index + 1 == items.length ? items[0] : items[index + 1]}
+                />
+                <Card
+                  key={index}
+                  frontCard={true}
+                  index={index}
+                  setIndex={setIndex}
+                  drag="x"
+                  item={items[index]}
+                />
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-
-/**
- * <div className="w-[60vw] h-[60vh] bg-black"/>
- */
