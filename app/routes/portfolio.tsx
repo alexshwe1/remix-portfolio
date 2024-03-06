@@ -11,6 +11,8 @@ interface Project {
   img: string;
   desc: string;
   shortDesc: string;
+  learnMoreText: string;
+  learnMoreLink?: string;
 }
 
 const items: Project[] = [
@@ -20,6 +22,8 @@ const items: Project[] = [
     img: bargain,
     desc: "Bargain is an iOS app I developed to showcase exclusive deals at bars in Madison and Chicago. Since hitting the App Store in September 2023, it's been a hit, racking up hundreds of downloads. By simplifying the discovery of new promotions and bolstering local businesses, Bargain is reshaping the nightlife landscape, seamlessly merging technology with social experiences.",
     shortDesc: "An iOS app for exclusive bar deals in Madison and Chicago.",
+    learnMoreText: "Click here to learn more!",
+    learnMoreLink: "https://apps.apple.com/us/app/bargain-sip-and-save/id6464521870?uo=2"
   },
   {
     id: 2,
@@ -27,6 +31,7 @@ const items: Project[] = [
     img: stravafy,
     desc: "Stravafy is a Remix application that bridges your Strava account with Spotify, allowing for seamless integration between your fitness activities and music preferences. Once you upload an activity on Strava, Stravafy automatically updates your activity to display the music you listened to during your workout. Additionally, Stravafy offers personalized playlists based on your activity types and paces, enhancing your workout experience with tailored music selections. ",
     shortDesc: "A Remix application linking Strava with Spotify, enhancing workout experiences with personalized playlists.",
+    learnMoreText: "Coming soon...",
   },
   {
     id: 3,
@@ -34,6 +39,8 @@ const items: Project[] = [
     img: moto,
     desc: "Moto is an online storefront providing electric bikes at accessible price points, merging innovation with eco-friendly transportation. Since its inception, Moto has been committed to making eco-friendly transportation options more accessible to all, revolutionizing the way people commute and adventure.",
     shortDesc: "An online storefront offering affordable electric bikes, merging innovation with eco-friendly transportation.",
+    learnMoreText: "Click here to learn more!",
+    learnMoreLink: "https://www.ridewithmoto.com/"
   }
 ];
 
@@ -60,12 +67,12 @@ function Card(props: CardProps) {
   };
 
   function handleDragEnd(_: any, info: any) {
-      if (info.offset.x < -20) {
-          setExitX(-20);
+      if (info.offset.x < -10) {
+          setExitX(-10);
           props.setIndex(props.index + 1 == items.length ? 0 : props.index + 1);
       }
-      if (info.offset.x > 20) {
-          setExitX(20);
+      if (info.offset.x > 10) {
+          setExitX(10);
           props.setIndex(props.index + 1 == items.length ? 0 : props.index + 1);
       }
   }
@@ -103,12 +110,62 @@ function Card(props: CardProps) {
           className="flex flex-col pl-5"
         >
           <h2
-            className="pb-2 pt-10 md:pt-0 font-block font-extrabold text-4xl animate-orange-wash bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 bg-clip-text text-transparent font-block font-extrabold"
+            className="pb-1 pt-2 md:pt-0 font-block font-extrabold text-4xl animate-orange-wash bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 bg-clip-text text-transparent font-block font-extrabold"
           >
             {props.item.title}
           </h2>
-          <p className="hidden lg:block">{props.item.desc}</p>
-          <p className="lg:hidden">{props.item.shortDesc}</p>
+          <p 
+            className="hidden lg:block"
+          >
+            {props.item.desc}
+            {props.item.learnMoreLink ? 
+                <motion.a 
+                href={props.item.learnMoreLink}
+                target="_blank"
+                whileHover={{
+                  scale: 1.05,
+                  color: "#f97316"
+                }}
+              >
+                {' '}{props.item.learnMoreText}
+              </motion.a> 
+            :
+              <motion.a
+                whileHover={{
+                  scale: 1.05,
+                  color: "#f97316"
+                }}
+              >
+                {' '}{props.item.learnMoreText}
+              </motion.a> 
+            }
+          </p>
+          <p 
+            className="lg:hidden"
+          >
+            {props.item.shortDesc}
+            {props.item.learnMoreLink ? 
+                <motion.a 
+                href={props.item.learnMoreLink}
+                target="_blank"
+                whileHover={{
+                  scale: 1.05,
+                  color: "#f97316"
+                }}
+              >
+                {' '}{props.item.learnMoreText}
+              </motion.a> 
+            :
+              <motion.a
+                whileHover={{
+                  scale: 1.05,
+                  color: "#f97316"
+                }}
+              >
+                {' '}{props.item.learnMoreText}
+              </motion.a> 
+            }
+          </p>
         </div>
       </div>
     </motion.div>
