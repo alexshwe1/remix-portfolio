@@ -17,7 +17,7 @@ const jobExperiences: JobExperience[] = [
     date: "2023-Present",
     location: "Chicago, IL",
     description:
-      "I help build and scale enterprise integrations for Shopify. Implemented CI/CD pipelines for development, staging, and development environments. Built embedded apps interacting with Shopify's storefront and admin APIs. Also helped make the integration apps look pretty.",
+      "I help build and scale enterprise integrations for Shopify. Implemented CI/CD pipelines for development, staging, and production environments. Built embedded apps interacting with Shopify's storefront and admin APIs. Also helped make the integration apps look pretty.",
     skills: [
       "CodePipeline",
       "EventBridge",
@@ -35,7 +35,7 @@ const jobExperiences: JobExperience[] = [
     date: "2022",
     location: "Redwood City, CA",
     description:
-      "Built a full stack user management application for cloud administrators using Angular, Node.js, MySQL, and other technologies. Authored a Node.js server-side application resulting in robust and efficient REST API routes.",
+      "Built a full stack user management application for cloud administrators using Angular, Node.js, MySQL, and other technologies. Also played around with some robots. They're pretty cool.",
     skills: ["Node.js", "Express.js", "Angular", "MySQL", "CI/CD"],
   },
   {
@@ -44,7 +44,7 @@ const jobExperiences: JobExperience[] = [
     date: "2021",
     location: "Palo Alto, CA",
     description:
-      "Wrote end-to-end test scripts using Cypress.io for a career tracking app.",
+      "Wrote end-to-end test scripts using Cypress.io for a career tracking app. This marks the start of my professional software engineering career",
     skills: ["Cypress.io", "GitHub"],
   },
 ];
@@ -94,7 +94,7 @@ export default function Resume() {
                   <div className="flex flex-wrap flex-row gap-2">
                     {experience.skills.map((skill) => {
                       return (
-                        <div className="bg-gray-200 rounded-2xl py-1 px-3">{skill}</div>
+                        <div className="transition-all duration-500 bg-gray-200 hover:bg-orange-500 rounded-2xl py-1 px-3">{skill}</div>
                       )
                     })}
                   </div>
