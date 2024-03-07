@@ -9,7 +9,7 @@ export default function Index() {
 
   return (
     <div className="flex flex-col z-30">
-      <div className="flex flex-row items-center justify-center py-24 md:h-[60vh] 2xl:py-96 px-5 md:px-10 bg-gray-50 border-b-1 border-gray-300">
+      <div className="flex flex-row items-center justify-center py-24 md:h-[60vh] 2xl:py-96 px-12 md:px-10 bg-gray-50 border-b-1 border-gray-300">
         <motion.p 
           initial={{
             scale: 0,
@@ -63,7 +63,7 @@ export default function Index() {
                 duration: 0.75,
                 ease: "backInOut"
               }}
-              className="flex items-stretch font-semibold text-base gap-x-10 md:gap-x-44 px-10"
+              className="text-center flex items-stretch font-semibold text-base gap-x-5 md:gap-x-44 px-5"
             >
               <motion.div 
                 whileHover={{
@@ -93,7 +93,7 @@ export default function Index() {
           </AnimatePresence>
         </div>
       </div>
-      <div className="py-24 px-5 md:py-48 md:px-52 bg-gray-50">
+      <div className="py-20 px-5 sm:px-20 md:py-48 lg:px-52 bg-gray-50">
         <div 
           className="flex flex-col items-center"
         >

@@ -76,7 +76,7 @@ export default function Resume() {
         <div className="flex flex-col w-[80vw] md:w-[50vw]">
           {jobExperiences.map((experience: JobExperience, index: number) => {
             return (
-              <div>
+              <div key={index}>
                 <div className="flex justify-between">
                   <Reveal><p className="font-black text-xl pb-3">{experience.company}</p></Reveal>
                   <Reveal><p className="hidden md:block">{experience.date}</p></Reveal>
