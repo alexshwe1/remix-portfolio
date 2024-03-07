@@ -175,8 +175,8 @@ function Card(props: CardProps) {
 export default function Portfolio() {
   const [index, setIndex] = useState(0);
 
-  const ref = useRef(null)
-  const isInView = useInView(ref)
+  const ref = useRef(null);
+  const isInView = useInView(ref);
 
   return (
     <div className="flex flex-col z-30">
