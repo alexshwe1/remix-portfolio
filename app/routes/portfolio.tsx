@@ -200,7 +200,7 @@ export default function Portfolio() {
           Featured Projects
         </motion.p>
       </div>
-      <div ref={ref} className="px-5 pt-[6vh] pb-[100vh] md:pt-[12vh] md:pb-[45vh] bg-white overflow-hidden">
+      <div ref={ref} className="px-5 pt-[6vh] pb-[100vh] md:pt-[100px] md:pb-[320px] 2xl:pt-[100px] 2xl:pb-[320px] bg-white overflow-hidden">
         <div 
           className="flex flex-row items-center justify-center"
         >

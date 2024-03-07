@@ -72,7 +72,7 @@ export default function Resume() {
           Experience
         </motion.p>
       </div>
-      <div className="flex flex-row items-center justify-center py-20 2xl:py-96 px-5 md:px-10 bg-white">
+      <div className="flex flex-row items-center justify-center py-20 2xl:py-36 px-5 md:px-10 bg-white">
         <div className="flex flex-col w-[80vw] md:w-[50vw]">
           {jobExperiences.map((experience: JobExperience, index: number) => {
             return (
