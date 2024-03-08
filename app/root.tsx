@@ -17,7 +17,6 @@ import { MotionValue, useScroll, motion } from "framer-motion";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: stylesheet }];
 
-
 export default function App() {
 
   return (
@@ -25,6 +24,7 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Alex Shwe</title>
         <Meta />
         <Links />
       </head>
