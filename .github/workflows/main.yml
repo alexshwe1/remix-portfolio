@@ -1,0 +1,59 @@
+name: Deploy Remix App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Log in to ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build and push Docker image to ECR
+      run: |
+        IMAGE_TAG=latest
+        IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/remix-portfolio:$IMAGE_TAG
+        docker build -t $IMAGE_URI .
+        docker push $IMAGE_URI
+
+    - name: Set up SSH key
+      run: |
+        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/portfolio-server-kp.pem
+        chmod 600 ~/.ssh/portfolio-server-kp.pem
+
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/portfolio-server-kp.pem ec2-user@${{ secrets.EC2_PUBLIC_IP }} << EOF
+        # Identify the container running on port 3000 and stop it if it exists
+        CONTAINER_ID=\$(sudo docker ps --filter "publish=3000" --format "{{.ID}}")
+        if [ -n "\$CONTAINER_ID" ]; then
+          echo "Stopping container running on port 3000..."
+          sudo docker stop \$CONTAINER_ID
+          sudo docker rm \$CONTAINER_ID
+        else
+          echo "No container running on port 3000."
+        fi
+        
+        # Pull the new image
+        docker pull $IMAGE_URI
+        
+        # Run the new container
+        docker run -d --name remix-portfolio -p 3000:3000 $IMAGE_URI
+        EOF
+      env:
+        IMAGE_URI: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/remix-portfolio:latest
