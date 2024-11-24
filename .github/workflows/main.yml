@@ -33,6 +33,7 @@ jobs:
 
     - name: Set up SSH key
       run: |
+        mkdir -p ~/.ssh
         echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/portfolio-server-kp.pem
         chmod 600 ~/.ssh/portfolio-server-kp.pem
 
