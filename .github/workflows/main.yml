@@ -24,38 +24,54 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
 
-    - name: Build and push Docker image to ECR
-      run: |
-        IMAGE_TAG=latest
-        IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/remix-portfolio:$IMAGE_TAG
-        docker build -t $IMAGE_URI .
-        docker push $IMAGE_URI
+    # - name: Build and push Docker image to ECR
+    #   run: |
+    #     IMAGE_TAG=latest
+    #     IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/remix-portfolio:$IMAGE_TAG
+    #     docker build -t $IMAGE_URI .
+    #     docker push $IMAGE_URI
 
-    - name: Deploy to EC2
-      run: |
-        echo "${{ secrets.EC2_SSH_KEY }}" > private_key && chmod 600 private_key
-        ssh -o StrictHostKeyChecking=no -i private_key ec2-user@${{ secrets.EC2_PUBLIC_IP }} << EOF
-        sudo aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
-        sudo docker system prune --all --force --volumes
-        # Identify the container running on port 3000 and stop it if it exists
-        CONTAINER_ID=\$(sudo docker ps --filter "publish=3000" --format "{{.ID}}")
-        if [ -n "\$CONTAINER_ID" ]; then
-          echo "Stopping container running on port 3000..."
-          sudo docker stop \$CONTAINER_ID
-          sudo docker rm \$CONTAINER_ID
-        else
-          echo "No container running on port 3000."
-        fi
+    # - name: Deploy to EC2
+    #   run: |
+    #     echo "${{ secrets.EC2_SSH_KEY }}" > private_key && chmod 600 private_key
+    #     ssh -o StrictHostKeyChecking=no -i private_key ec2-user@${{ secrets.EC2_PUBLIC_IP }} << EOF
+    #     sudo aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+    #     sudo docker system prune --all --force --volumes
+    #     # Identify the container running on port 3000 and stop it if it exists
+    #     CONTAINER_ID=\$(sudo docker ps --filter "publish=3000" --format "{{.ID}}")
+    #     if [ -n "\$CONTAINER_ID" ]; then
+    #       echo "Stopping container running on port 3000..."
+    #       sudo docker stop \$CONTAINER_ID
+    #       sudo docker rm \$CONTAINER_ID
+    #     else
+    #       echo "No container running on port 3000."
+    #     fi
 
-        sudo docker system prune --all --force --volumes
+    #     sudo docker system prune --all --force --volumes
         
-        # Pull the new image
-        sudo docker pull $IMAGE_URI
+    #     # Pull the new image
+    #     sudo docker pull $IMAGE_URI
         
-        # Run the new container
-        sudo docker run -d --name remix-portfolio -p 3000:3000 $IMAGE_URI
+    #     # Run the new container
+    #     sudo docker run -d --name remix-portfolio -p 3000:3000 $IMAGE_URI
 
-        sudo docker system prune --all --force --volumes
-        EOF
+    #     sudo docker system prune --all --force --volumes
+    #     EOF
+    #   env:
+    #     IMAGE_URI: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/remix-portfolio:latest
+
+    - name: Cleanup Old ECR Images
+      run: |
+        REPO_NAME=remix-portfolio
+        aws ecr list-images --repository-name $REPO_NAME --query 'imageIds[?imageTag!=`null`]' --output json \
+          | jq -c '.|sort_by(.imageTag)|.[0:-2]' \
+          | jq -r '.[] | @base64' \
+          | while read image; do
+              IMAGE_ID=$(echo $image | base64 --decode | jq -r '.')
+              echo "Deleting old image: $IMAGE_ID"
+              aws ecr batch-delete-image --repository-name $REPO_NAME --image-ids "$IMAGE_ID"
+            done
       env:
-        IMAGE_URI: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/remix-portfolio:latest
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: us-east-1
