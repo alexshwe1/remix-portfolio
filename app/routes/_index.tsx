@@ -105,10 +105,10 @@ export default function Index() {
               transition: "all 0.75s cubic-bezier(0.17, 0.55, 0.55, 1)"
             }}
           >
-            Hey I'm Alex Shwe and I love to build. My love for creating started with my middle school woodowrking elective. 
-            I loved learning about new tools and soon built a sizable shop of my own. Youtube was (and still is) my goto resource for exposing myself to new tools, 
+            Hey, I'm Alex Shwe, and I love to build. My love for creating started with my middle school woodworking elective. 
+            I loved learning about new tools and soon built a sizable shop of my own. YouTube was (and still is) my go-to resource for exposing myself to new tools, 
             and as soon as I discovered a new tool, I had to have it. The problem? Tools worth hundreds of dollars are pretty tough for a middle schooler to afford. 
-            In high school, I began learning to code and immidiately took to it. Instead of having to pay hundreds of dollars for a new tool, 
+            In high school, I began learning to code and immediately took to it. Instead of having to pay hundreds of dollars for a new tool, 
             all I had to spend were a few seconds installing a package or library. Ever since, I have loved discovering new tools to put in my toolbelt.
           </div>
         </div>
