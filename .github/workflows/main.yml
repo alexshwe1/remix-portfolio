@@ -33,6 +33,7 @@ jobs:
 
     - name: Deploy to EC2
       run: |
+        sudo aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
         echo "${{ secrets.EC2_SSH_KEY }}" > private_key && chmod 600 private_key
         ssh -o StrictHostKeyChecking=no -i private_key ec2-user@${{ secrets.EC2_PUBLIC_IP }} << EOF
         # Identify the container running on port 3000 and stop it if it exists
