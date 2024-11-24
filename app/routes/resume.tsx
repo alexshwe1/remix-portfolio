@@ -17,15 +17,14 @@ const jobExperiences: JobExperience[] = [
     date: "2023-Present",
     location: "Chicago, IL",
     description:
-      "I help build and scale enterprise integrations for Shopify. Implemented CI/CD pipelines for development, staging, and production environments. Built embedded apps interacting with Shopify's storefront and admin APIs. Also helped make the integration apps look pretty.",
+      "I co-lead the development of TMG Fuse, the only integration app purpose-built for Shopify and fully embedded within its app ecosystem. Built a responsive Shopify-embedded frontend using Remix, developed secure backend services for data synchronization, and provisioned all AWS infrastructure via Terraform. Scaled Fuse from a proof of concept to a production-ready solution used by TMG clients.",
     skills: [
-      "CodePipeline",
-      "EventBridge",
-      "Lambda",
-      "SQS",
-      "ECS",
       "Remix",
-      "React",
+      "DBOS",
+      "Node.js",
+      "AWS",
+      "Terraform",
+      "GraphQL",
       "Shopify"
     ],
   },
