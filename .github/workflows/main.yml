@@ -46,6 +46,8 @@ jobs:
         else
           echo "No container running on port 3000."
         fi
+
+        sudo docker system prune --all --force --volumes
         
         # Pull the new image
         sudo docker pull $IMAGE_URI
@@ -53,9 +55,7 @@ jobs:
         # Run the new container
         sudo docker run -d --name remix-portfolio -p 3000:3000 $IMAGE_URI
 
-        sudo docker image prune --all --force
-        sudo docker container prune --force
-        sudo docker volume prune --force
+        sudo docker system prune --all --force --volumes
         EOF
       env:
         IMAGE_URI: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/remix-portfolio:latest
