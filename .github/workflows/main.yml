@@ -63,14 +63,25 @@ jobs:
     - name: Cleanup Old ECR Images
       run: |
         REPO_NAME=remix-portfolio
-        aws ecr list-images --repository-name $REPO_NAME --query 'imageIds[?imageTag!=`null`]' --output json \
-          | jq -c '.|sort_by(.imageTag)|.[0:-2]' \
-          | jq -r '.[] | @base64' \
-          | while read image; do
-              IMAGE_ID=$(echo $image | base64 --decode | jq -r '.')
-              echo "Deleting old image: $IMAGE_ID"
-              aws ecr batch-delete-image --repository-name $REPO_NAME --image-ids "$IMAGE_ID"
-            done
+        # List images sorted by `imagePushedAt`, keeping only the two most recent ones
+        aws ecr describe-images --repository-name $REPO_NAME --query 'sort_by(imageDetails,&imagePushedAt)[*].[imageDigest,imageTag]' --output json > all_images.json
+        TOTAL_IMAGES=$(jq '. | length' all_images.json)
+        
+        if [ "$TOTAL_IMAGES" -gt 2 ]; then
+          echo "Total images: $TOTAL_IMAGES"
+          IMAGES_TO_DELETE=$(jq '. | .[:-2]' all_images.json)
+          
+          echo "Images to delete:"
+          echo "$IMAGES_TO_DELETE"
+          
+          echo "$IMAGES_TO_DELETE" | jq -c '.[]' | while read image; do
+            DIGEST=$(echo $image | jq -r '.[0]')
+            echo "Deleting image with digest: $DIGEST"
+            aws ecr batch-delete-image --repository-name $REPO_NAME --image-ids imageDigest=$DIGEST
+          done
+        else
+          echo "No images to delete. Total images ($TOTAL_IMAGES) is less than or equal to 2."
+        fi
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
